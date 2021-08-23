@@ -4,21 +4,26 @@
 from SnakeGame.direction import Direction
 import pygame
 
+from board import Board
 from position import Position
 from snake import Snake
 
 
+BOARD_WIDTH = 32    # Number of tiles horizontally
+BOARD_HEIGHT = 24   # Number of tiles vertically
+TILE_SIZE = 32      # Board tile size in pixels
+GAME_FPS = 60
+WINDOW_SIZE = (BOARD_WIDTH * TILE_SIZE, BOARD_HEIGHT * TILE_SIZE)
+
+
 class SnakeGame:
-    GAME_FPS = 60
-
-
     def __init__(self) -> None:
         self._init_pygame()
         self.clock = pygame.time.Clock()
-        self.screen = pygame.display.set_mode((1024, 768))
+        self.screen = pygame.display.set_mode(WINDOW_SIZE)
 
-        self.board = None
-        self.snake = Snake(Position(10, 10))
+        self.snake = Snake(Position(BOARD_WIDTH // 2, BOARD_HEIGHT // 2))
+        self.board = Board(BOARD_WIDTH, BOARD_HEIGHT)
 
 
     def main_loop(self):
@@ -60,4 +65,4 @@ class SnakeGame:
     def _draw(self):
         self.screen.fill(0, 0, 255)
         pygame.display.flip()
-        self.clock.tick(SnakeGame.GAME_FPS)
+        self.clock.tick(GAME_FPS)
